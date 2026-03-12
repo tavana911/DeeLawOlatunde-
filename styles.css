@@ -74,7 +74,7 @@ h3 {
 }
 
 p {
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
   line-height: 1.8;
   color: var(--slate);
 }
@@ -504,7 +504,7 @@ p {
   width: 100%;
   height: 600px;
   object-fit: cover;
-  object-position: top center;
+  object-position: center top;
   position: relative;
   z-index: 1;
   filter: grayscale(20%);
@@ -569,7 +569,7 @@ p {
    ABOUT
 ══════════════════════════════ */
 #about {
-  padding: 7rem 0;
+  padding: clamp(4rem, 8vw, 7rem) 0;
   background: var(--white);
 }
 
@@ -651,7 +651,7 @@ p {
    SERVICES
 ══════════════════════════════ */
 #services {
-  padding: 7rem 0;
+  padding: clamp(4rem, 8vw, 7rem) 0;
   background: var(--navy);
   position: relative;
   overflow: hidden;
@@ -676,7 +676,7 @@ p {
 .service-card {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(201, 168, 76, 0.15);
-  padding: 2.5rem;
+  padding: clamp(1.75rem, 4vw, 2.5rem);
   height: 100%;
   transition: var(--transition);
   position: relative;
@@ -742,7 +742,7 @@ p {
    CASE RESULTS
 ══════════════════════════════ */
 #results {
-  padding: 7rem 0;
+  padding: clamp(4rem, 8vw, 7rem) 0;
   background: var(--cream);
 }
 
@@ -754,7 +754,7 @@ p {
 .case-card {
   background: var(--white);
   border: 1px solid rgba(201, 168, 76, 0.15);
-  padding: 2rem;
+  padding: clamp(1.5rem, 4vw, 2rem);
   height: 100%;
   transition: var(--transition);
   position: relative;
@@ -816,7 +816,7 @@ p {
    TESTIMONIALS
 ══════════════════════════════ */
 #testimonials {
-  padding: 7rem 0;
+  padding: clamp(4rem, 8vw, 7rem) 0;
   background: var(--navy);
   position: relative;
 }
@@ -829,7 +829,7 @@ p {
 .testimonial-card {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(201, 168, 76, 0.15);
-  padding: 2.5rem;
+  padding: clamp(1.75rem, 4vw, 2.5rem);
   height: 100%;
   transition: var(--transition);
   position: relative;
@@ -920,7 +920,7 @@ p {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0;
+  gap: clamp(0, 2vw, 1rem);
 }
 
 .trust-item {
@@ -966,7 +966,7 @@ p {
    FAQ
 ══════════════════════════════ */
 #faq {
-  padding: 7rem 0;
+  padding: clamp(4rem, 8vw, 7rem) 0;
   background: var(--white);
 }
 
@@ -1045,7 +1045,7 @@ p {
    CONTACT / BOOKING
 ══════════════════════════════ */
 #contact {
-  padding: 7rem 0;
+  padding: clamp(4rem, 8vw, 7rem) 0;
   background: var(--navy);
   position: relative;
   overflow: hidden;
@@ -1371,23 +1371,143 @@ footer {
   .hero-badge { left: 10px; bottom: 20px; }
   .trust-item { padding: 1rem 1.5rem; }
   .form-wrap { padding: 2rem; }
+  
+  /* Hero img better fit */
+  .hero-photo {
+    height: 450px;
+  }
+  
+  .hero-photo-placeholder {
+    height: 450px;
+  }
 }
 
 @media (max-width: 767px) {
-  #home { padding-top: 80px; }
-  .hero-stat-num { font-size: 1.6rem; }
+  #home { 
+    min-height: 100vh;
+    flex-direction: column !important;
+  }
+  .row.align-items-center {
+    flex-direction: column-reverse !important;
+  }
+  .hero-content {
+    text-align: center;
+    order: 2;
+    margin-top: 2rem;
+  }
+  .hero-stat-num { font-size: 1.4rem; }
+  .hero-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    margin-top: 2rem;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-actions {
+    justify-content: center;
+  }
+  
+  /* Services/Results/Testimonials stack to full width */
+  .service-card, .case-card, .testimonial-card {
+    margin-bottom: 1rem;
+  }
+  
+  .row.g-4 > [class*="col-"] {
+    margin-bottom: 1rem;
+  }
+  
   .trust-item {
     width: 50%;
     border-right: 1px solid rgba(201, 168, 76, 0.15);
     border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+    padding: 0.75rem 1rem;
   }
   .trust-item:nth-child(even) { border-right: none; }
-  .hero-photo { height: 400px; }
-  .hero-photo-placeholder { height: 400px; }
+  .hero-photo { 
+    height: 350px;
+    object-fit: cover;
+    object-position: center 20%;
+  }
+  .hero-photo-placeholder { height: 350px; }
+  
+  /* Section spacing */
+  #about, #services, #results, #testimonials, #faq, #contact {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
 }
 
 @media (max-width: 480px) {
-  .hero-actions { flex-direction: column; }
-  .hero-stats { grid-template-columns: 1fr; }
-  .hero-badge { position: static; margin-top: 1rem; }
+  html { font-size: 15px; }
+  
+  /* Hero mobile optimizations */
+  .hero-actions { 
+    flex-direction: column; 
+    gap: 0.75rem;
+  }
+  .hero-stats { 
+    grid-template-columns: 1fr; 
+    max-width: 280px;
+  }
+  .hero-stat {
+    padding: 1.25rem 1rem;
+  }
+  .hero-stat-num { font-size: 1.8rem; }
+  .hero-photo { 
+    height: 300px;
+    object-fit: contain;
+    object-position: center;
+  }
+  .hero-photo-placeholder { height: 300px; }
+  .hero-badge { 
+    position: static; 
+    margin: 1.5rem auto 0;
+    text-align: center;
+  }
+  
+  /* Global mobile spacing */
+  .section-header {
+    margin-bottom: 2.5rem;
+  }
+  
+  #about, #services, #results, #testimonials, #faq, #contact {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
+  
+  /* Cards stack & spacing */
+.service-card, .case-card, .testimonial-card {
+    padding: 1.5rem 1.25rem !important;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Navbar mobile */
+  .nav-link-item {
+    padding: 0.75rem 1rem !important;
+    font-size: 0.85rem !important;
+  }
+  
+  #mobileNav .btn-primary-gold.btn-sm {
+    margin-top: 0.75rem;
+    padding: 1rem !important;
+  }
+  
+  /* Trust badges */
+  .trust-item {
+    width: 33.333%;
+    padding: 0.75rem 0.5rem;
+  }
+  
+  /* Buttons touch-friendly */
+  .btn-primary-gold, .btn-outline-gold {
+    padding: 1.1rem 2.5rem;
+    min-height: 48px;
+    font-size: 0.85rem;
+  }
+  
+  .btn-primary-gold.btn-sm, .btn-outline-gold.btn-sm {
+    padding: 1rem 2rem;
+    min-height: 44px;
+  }
 }
